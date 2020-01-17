@@ -23,37 +23,7 @@ const operationTabList = [
         </span>
       </span>
     ),
-  },
-  {
-    key: 'applications',
-    tab: (
-      <span>
-        应用{' '}
-        <span
-          style={{
-            fontSize: 14,
-          }}
-        >
-          (8)
-        </span>
-      </span>
-    ),
-  },
-  {
-    key: 'projects',
-    tab: (
-      <span>
-        项目{' '}
-        <span
-          style={{
-            fontSize: 14,
-          }}
-        >
-          (8)
-        </span>
-      </span>
-    ),
-  },
+  }
 ];
 
 class AccountCenter extends Component {
@@ -142,14 +112,6 @@ class AccountCenter extends Component {
   };
 
   renderChildrenByTabKey = tabKey => {
-    if (tabKey === 'projects') {
-      return <Projects />;
-    }
-
-    if (tabKey === 'applications') {
-      return <Applications />;
-    }
-
     if (tabKey === 'articles') {
       return <Articles />;
     }

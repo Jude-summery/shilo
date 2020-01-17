@@ -82,6 +82,24 @@ export default {
           path: '/user/login',
           component: './user/login',
         },
+        {
+          name: '登录页',
+          icon: 'smile',
+          path: '/userlogin',
+          component: './UserLogin',
+        },
+        {
+          name: '注册结果页',
+          icon: 'smile',
+          path: '/userregisterresult',
+          component: './UserRegisterResult',
+        },
+        {
+          name: '注册页',
+          icon: 'smile',
+          path: '/userregister',
+          component: './UserRegister',
+        },
       ],
     },
     {
@@ -95,20 +113,7 @@ export default {
           routes: [
             {
               path: '/',
-              redirect: '/welcome',
-            },
-            {
-              path: '/welcome',
-              name: 'welcome',
-              icon: 'smile',
-              component: './Welcome',
-            },
-            {
-              path: '/admin',
-              name: 'admin',
-              icon: 'crown',
-              component: './Admin',
-              authority: ['admin'],
+              redirect: '/accountcenter',
             },
             {
               name: '个人中心',
@@ -171,11 +176,11 @@ export default {
   manifest: {
     basePath: '/',
   }, // chainWebpack: webpackPlugin,
-  // proxy: {
-  //   '/server/api/': {
-  //     target: 'https://preview.pro.ant.design/',
-  //     changeOrigin: true,
-  //     pathRewrite: { '^/server': '' },
-  //   },
-  // },
+  proxy: {
+    '/api': {
+      target: 'http://localhost:6699/',
+      changeOrigin: true,
+      pathRewrite: { '^/api': '' },
+    },
+  },
 };

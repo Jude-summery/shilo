@@ -8,3 +8,6 @@ export async function queryFakeList(params) {
     params,
   });
 }
+export async function queryTest(params) {
+  return request('/api/posts/test');
+}
