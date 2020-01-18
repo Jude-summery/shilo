@@ -38,7 +38,6 @@ class UserRegister extends Component {
     confirmDirty: false,
     visible: false,
     help: '',
-    prefix: '86',
   };
 
   interval = undefined;
@@ -103,10 +102,9 @@ class UserRegister extends Component {
       },
       (err, values) => {
         if (!err) {
-          const { prefix } = this.state;
           dispatch({
             type: 'userRegister/submit',
-            payload: { ...values, prefix },
+            payload: values,
           });
         }
       },
@@ -165,12 +163,6 @@ class UserRegister extends Component {
     }
   };
 
-  changePrefix = value => {
-    this.setState({
-      prefix: value,
-    });
-  };
-
   renderPasswordProgress = () => {
     const { form } = this.props;
     const value = form.getFieldValue('password');
@@ -191,7 +183,7 @@ class UserRegister extends Component {
   render() {
     const { form, submitting } = this.props;
     const { getFieldDecorator } = form;
-    const { count, prefix, help, visible } = this.state;
+    const { count, help, visible } = this.state;
     return (
       <div className={styles.main}>
         <h3>
@@ -296,84 +288,6 @@ class UserRegister extends Component {
             )}
           </FormItem>
           <FormItem>
-            <InputGroup compact>
-              <Select
-                size="large"
-                value={prefix}
-                onChange={this.changePrefix}
-                style={{
-                  width: '20%',
-                }}
-              >
-                <Option value="86">+86</Option>
-                <Option value="87">+87</Option>
-              </Select>
-              {getFieldDecorator('mobile', {
-                rules: [
-                  {
-                    required: true,
-                    message: formatMessage({
-                      id: 'userregister.phone-number.required',
-                    }),
-                  },
-                  {
-                    pattern: /^\d{11}$/,
-                    message: formatMessage({
-                      id: 'userregister.phone-number.wrong-format',
-                    }),
-                  },
-                ],
-              })(
-                <Input
-                  size="large"
-                  style={{
-                    width: '80%',
-                  }}
-                  placeholder={formatMessage({
-                    id: 'userregister.phone-number.placeholder',
-                  })}
-                />,
-              )}
-            </InputGroup>
-          </FormItem>
-          <FormItem>
-            <Row gutter={8}>
-              <Col span={16}>
-                {getFieldDecorator('captcha', {
-                  rules: [
-                    {
-                      required: true,
-                      message: formatMessage({
-                        id: 'userregister.verification-code.required',
-                      }),
-                    },
-                  ],
-                })(
-                  <Input
-                    size="large"
-                    placeholder={formatMessage({
-                      id: 'userregister.verification-code.placeholder',
-                    })}
-                  />,
-                )}
-              </Col>
-              <Col span={8}>
-                <Button
-                  size="large"
-                  disabled={!!count}
-                  className={styles.getCaptcha}
-                  onClick={this.onGetCaptcha}
-                >
-                  {count
-                    ? `${count} s`
-                    : formatMessage({
-                        id: 'userregister.register.get-verification-code',
-                      })}
-                </Button>
-              </Col>
-            </Row>
-          </FormItem>
-          <FormItem>
             <Button
               size="large"
               loading={submitting}
@@ -383,7 +297,7 @@ class UserRegister extends Component {
             >
               <FormattedMessage id="userregister.register.register" />
             </Button>
-            <Link className={styles.login} to="/user/login">
+            <Link className={styles.login} to="/user/userlogin">
               <FormattedMessage id="userregister.register.sign-in" />
             </Link>
           </FormItem>

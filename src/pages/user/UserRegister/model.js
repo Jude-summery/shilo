@@ -1,4 +1,4 @@
-import { fakeRegister } from './service';
+import { signup } from './service';
 
 const Model = {
   namespace: 'userRegister',
@@ -7,11 +7,11 @@ const Model = {
   },
   effects: {
     *submit({ payload }, { call, put }) {
-      const response = yield call(fakeRegister, payload);
-      yield put({
-        type: 'registerHandle',
-        payload: response,
-      });
+      const response = yield call(signup, payload);
+      // yield put({
+      //   type: 'registerHandle',
+      //   payload: response,
+      // });
     },
   },
   reducers: {

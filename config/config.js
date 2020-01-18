@@ -78,27 +78,22 @@ export default {
       component: '../layouts/UserLayout',
       routes: [
         {
-          name: 'login',
-          path: '/user/login',
-          component: './user/login',
-        },
-        {
           name: '登录页',
           icon: 'smile',
-          path: '/userlogin',
-          component: './UserLogin',
+          path: '/user/userlogin',
+          component: './user/UserLogin',
         },
         {
           name: '注册结果页',
           icon: 'smile',
-          path: '/userregisterresult',
-          component: './UserRegisterResult',
+          path: '/user/userregisterresult',
+          component: './user/UserRegisterResult',
         },
         {
           name: '注册页',
           icon: 'smile',
-          path: '/userregister',
-          component: './UserRegister',
+          path: '/user/userregister',
+          component: './user/UserRegister',
         },
       ],
     },
@@ -180,7 +175,7 @@ export default {
     '/api': {
       target: 'http://localhost:6699/',
       changeOrigin: true,
-      pathRewrite: { '^/api': '' },
+      pathRewrite: { '^/api': '/api' },
     },
   },
 };
