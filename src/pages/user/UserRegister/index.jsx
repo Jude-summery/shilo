@@ -45,8 +45,8 @@ class UserRegister extends Component {
   componentDidUpdate() {
     const { userRegister, form } = this.props;
     const account = form.getFieldValue('mail');
-
-    if (userRegister.status === 'ok') {
+    console.log(userRegister)
+    if (userRegister.status === 200) {
       message.success('注册成功！');
       router.push({
         pathname: '/user/register-result',
@@ -190,28 +190,18 @@ class UserRegister extends Component {
           <FormattedMessage id="userregister.register.register" />
         </h3>
         <Form onSubmit={this.handleSubmit}>
-          <FormItem>
-            {getFieldDecorator('mail', {
+        <FormItem>
+            {getFieldDecorator('name', {
               rules: [
                 {
                   required: true,
-                  message: formatMessage({
-                    id: 'userregister.email.required',
-                  }),
-                },
-                {
-                  type: 'email',
-                  message: formatMessage({
-                    id: 'userregister.email.wrong-format',
-                  }),
-                },
+                  message: '请输入用户名'
+                }
               ],
             })(
               <Input
                 size="large"
-                placeholder={formatMessage({
-                  id: 'userregister.email.placeholder',
-                })}
+                placeholder='用户名'
               />,
             )}
           </FormItem>

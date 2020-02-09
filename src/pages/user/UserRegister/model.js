@@ -8,14 +8,16 @@ const Model = {
   effects: {
     *submit({ payload }, { call, put }) {
       const response = yield call(signup, payload);
-      // yield put({
-      //   type: 'registerHandle',
-      //   payload: response,
-      // });
+      console.log(response)
+      yield put({
+        type: 'registerHandle',
+        payload: response,
+      });
     },
   },
   reducers: {
     registerHandle(state, { payload }) {
+      console.log(payload,111111)
       return { ...state, status: payload.status };
     },
   },
