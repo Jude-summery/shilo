@@ -177,5 +177,5 @@ export default {
       changeOrigin: true,
       pathRewrite: { '^/api': '/api' },
     },
-  },
+  }
 };
