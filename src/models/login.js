@@ -1,9 +1,10 @@
-import { routerRedux } from 'dva/router';
-import { fakeAccountLogin, getFakeCaptcha } from './service';
-import { getPageQuery, setAuthority } from './utils/utils';
-
+import { stringify } from 'querystring';
+import router from 'umi/router';
+import { fakeAccountLogin, getFakeCaptcha } from '@/services/login';
+import { setAuthority } from '@/utils/authority';
+import { getPageQuery } from '@/utils/utils';
 const Model = {
-  namespace: 'userLogin',
+  namespace: 'login',
   state: {
     status: undefined,
   },
@@ -30,12 +31,12 @@ const Model = {
               redirect = redirect.substr(redirect.indexOf('#') + 1);
             }
           } else {
-            window.location.href = redirect;
+            window.location.href = '/';
             return;
           }
         }
 
-        yield put(routerRedux.replace(redirect || '/'));
+        router.replace(redirect || '/');
       }
     },
 
