@@ -45,11 +45,10 @@ class UserRegister extends Component {
   componentDidUpdate() {
     const { userRegister, form } = this.props;
     const account = form.getFieldValue('mail');
-    console.log(userRegister)
     if (userRegister.status === 200) {
       message.success('注册成功！');
       router.push({
-        pathname: '/user/register-result',
+        pathname: '/user/userregisterresult',
         state: {
           account,
         },
