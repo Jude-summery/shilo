@@ -52,4 +52,17 @@ const request = extend({
   // 默认错误处理
   credentials: 'include', // 默认请求是否带上cookie
 });
+
+request.use(async (ctx, next) => {
+  await next()
+  const { res } = ctx
+  const { statusText = 'error' } = res
+  if(statusText != 'success'){
+    notification.error({
+      message: `错误`,
+      description: res.message,
+    });
+  }
+})
+
 export default request;
