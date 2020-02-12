@@ -8,10 +8,10 @@ const Model = {
   effects: {
     *submit({ payload }, { call, put }) {
       const response = yield call(signup, payload);
-      // yield put({
-      //   type: 'registerHandle',
-      //   payload: response,
-      // });
+      yield put({
+        type: 'registerHandle',
+        payload: response,
+      });
     },
   },
   reducers: {
