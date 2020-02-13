@@ -47,6 +47,12 @@ class UserRegister extends Component {
     const account = form.getFieldValue('mail');
     if (userRegister.status === 200) {
       message.success('注册成功！');
+      this.props.dispatch({
+        type: 'userRegister/registerHandle',
+        payload: {
+          status: null
+        }
+      })
       router.push({
         pathname: '/user/userregisterresult',
         state: {

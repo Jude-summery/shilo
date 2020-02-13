@@ -3,6 +3,7 @@ import { connect } from 'dva';
 import { PageLoading } from '@ant-design/pro-layout';
 import { Redirect } from 'umi';
 import { stringify } from 'querystring';
+import { getCookie } from '@/utils/utils'
 
 class SecurityLayout extends React.Component {
   state = {
@@ -16,18 +17,18 @@ class SecurityLayout extends React.Component {
     const { dispatch } = this.props;
 
     if (dispatch) {
-      dispatch({
-        type: 'user/fetchCurrent',
-      });
+      // dispatch({
+      //   type: 'user/fetchCurrent',
+      // });
     }
   }
 
   render() {
     const { isReady } = this.state;
-    const { children, loading, currentUser } = this.props; // You can replace it to your authentication rule (such as check token exists)
+    const { children, loading } = this.props; // You can replace it to your authentication rule (such as check token exists)
     // 你可以把它替换成你自己的登录认证规则（比如判断 token 是否存在）
 
-    const isLogin = currentUser && currentUser.userid;
+    const isLogin = getCookie('USER');
     const queryString = stringify({
       redirect: window.location.href,
     });
@@ -37,7 +38,7 @@ class SecurityLayout extends React.Component {
     }
 
     if (!isLogin) {
-      return <Redirect to={`/userlogin?${queryString}`}></Redirect>;
+      return <Redirect to={`/user/userlogin?${queryString}`}></Redirect>;
     }
 
     return children;

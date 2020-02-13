@@ -1,6 +1,6 @@
 import { stringify } from 'querystring';
 import router from 'umi/router';
-import { fakeAccountLogin, getFakeCaptcha } from '@/services/login';
+import { fakeAccountLogin, getFakeCaptcha, signout } from '@/services/login';
 import { setAuthority } from '@/utils/authority';
 import { getPageQuery } from '@/utils/utils';
 const Model = {
@@ -44,16 +44,20 @@ const Model = {
       yield call(getFakeCaptcha, payload);
     },
 
-    logout() {
-      const { redirect } = getPageQuery(); // Note: There may be security issues, please note
+    *logout({ payload }, { call }) {
+      const response = yield call(signout);
+      if(response.status === 200){
 
-      if (window.location.pathname !== '/user/userlogin' && !redirect) {
-        router.replace({
-          pathname: '/user/userlogin',
-          search: stringify({
-            redirect: window.location.href,
-          }),
-        });
+        const { redirect } = getPageQuery(); // Note: There may be security issues, please note
+
+        if (window.location.pathname !== '/user/userlogin' && !redirect) {
+          router.replace({
+            pathname: '/user/userlogin',
+            search: stringify({
+              redirect: window.location.href,
+            }),
+          });
+        }
       }
     },
   },

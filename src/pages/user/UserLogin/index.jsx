@@ -95,7 +95,7 @@ class UserLogin extends Component {
               }),
             )}
           <UserName
-            name="userName"
+            name="name"
             placeholder={`${formatMessage({
               id: 'userlogin.login.userName',
             })}: admin or user`}
