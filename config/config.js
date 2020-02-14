@@ -117,6 +117,12 @@ export default {
               component: './AccountCenter',
             },
             {
+              name: '个人设置',
+              icon: 'setting',
+              path: '/account/settings',
+              component: './AccountSettings',
+            },
+            {
               component: './404',
             },
           ],
