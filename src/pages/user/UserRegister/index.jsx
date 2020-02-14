@@ -1,5 +1,4 @@
 import { Button, Col, Form, Input, Popover, Progress, Row, Select, message } from 'antd';
-import { FormattedMessage, formatMessage } from 'umi-plugin-react/locale';
 import React, { Component } from 'react';
 import Link from 'umi/link';
 import { connect } from 'dva';
@@ -12,17 +11,17 @@ const InputGroup = Input.Group;
 const passwordStatusMap = {
   ok: (
     <div className={styles.success}>
-      <FormattedMessage id="userregister.strength.strong" />
+      强度：强
     </div>
   ),
   pass: (
     <div className={styles.warning}>
-      <FormattedMessage id="userregister.strength.medium" />
+      强度：中
     </div>
   ),
   poor: (
     <div className={styles.error}>
-      <FormattedMessage id="userregister.strength.short" />
+      强度：太短
     </div>
   ),
 };
@@ -121,9 +120,7 @@ class UserRegister extends Component {
 
     if (value && value !== form.getFieldValue('password')) {
       callback(
-        formatMessage({
-          id: 'userregister.password.twice',
-        }),
+        '两次输入的密码不匹配!',
       );
     } else {
       callback();
@@ -135,9 +132,7 @@ class UserRegister extends Component {
 
     if (!value) {
       this.setState({
-        help: formatMessage({
-          id: 'userregister.password.required',
-        }),
+        help: '请输入密码！',
         visible: !!value,
       });
       callback('error');
@@ -192,7 +187,7 @@ class UserRegister extends Component {
     return (
       <div className={styles.main}>
         <h3>
-          <FormattedMessage id="userregister.register.register" />
+          注册
         </h3>
         <Form onSubmit={this.handleSubmit}>
         <FormItem>
@@ -232,7 +227,7 @@ class UserRegister extends Component {
                       marginTop: 10,
                     }}
                   >
-                    <FormattedMessage id="userregister.strength.msg" />
+                    请至少输入 6 个字符。请不要使用容易被猜到的密码。
                   </div>
                 </div>
               }
@@ -252,9 +247,7 @@ class UserRegister extends Component {
                 <Input
                   size="large"
                   type="password"
-                  placeholder={formatMessage({
-                    id: 'userregister.password.placeholder',
-                  })}
+                  placeholder='至少6位密码，区分大小写'
                 />,
               )}
             </Popover>
@@ -264,9 +257,7 @@ class UserRegister extends Component {
               rules: [
                 {
                   required: true,
-                  message: formatMessage({
-                    id: 'userregister.confirm-password.required',
-                  }),
+                  message: '请确认密码！',
                 },
                 {
                   validator: this.checkConfirm,
@@ -276,9 +267,7 @@ class UserRegister extends Component {
               <Input
                 size="large"
                 type="password"
-                placeholder={formatMessage({
-                  id: 'userregister.confirm-password.placeholder',
-                })}
+                placeholder='确认密码'
               />,
             )}
           </FormItem>
@@ -290,10 +279,10 @@ class UserRegister extends Component {
               type="primary"
               htmlType="submit"
             >
-              <FormattedMessage id="userregister.register.register" />
+              注册
             </Button>
             <Link className={styles.login} to="/user/userlogin">
-              <FormattedMessage id="userregister.register.sign-in" />
+              使用已有账户登录
             </Link>
           </FormItem>
         </Form>

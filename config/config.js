@@ -108,12 +108,12 @@ export default {
           routes: [
             {
               path: '/',
-              redirect: '/accountcenter',
+              redirect: '/account/center',
             },
             {
               name: '个人中心',
               icon: 'smile',
-              path: '/accountcenter',
+              path: '/account/center',
               component: './AccountCenter',
             },
             {
