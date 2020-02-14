@@ -27,21 +27,6 @@ const operationTabList = [
 ];
 
 class AccountCenter extends Component {
-  // static getDerivedStateFromProps(
-  //   props: accountCenterProps,
-  //   state: accountCenterState,
-  // ) {
-  //   const { match, location } = props;
-  //   const { tabKey } = state;
-  //   const path = match && match.path;
-  //   const urlTabKey = location.pathname.replace(`${path}/`, '');
-  //   if (urlTabKey && urlTabKey !== '/' && tabKey !== urlTabKey) {
-  //     return {
-  //       tabKey: urlTabKey,
-  //     };
-  //   }
-  //   return null;
-  // }
   state = {
     newTags: [],
     inputVisible: false,
@@ -146,31 +131,6 @@ class AccountCenter extends Component {
                       <i className={styles.title} />
                       {currentUser.title}
                     </p>
-                    <p>
-                      <i className={styles.group} />
-                      {currentUser.group}
-                    </p>
-                    <p>
-                      <i className={styles.address} />
-                      {
-                        (
-                          currentUser.geographic || {
-                            province: {
-                              label: '',
-                            },
-                          }
-                        ).province.label
-                      }
-                      {
-                        (
-                          currentUser.geographic || {
-                            city: {
-                              label: '',
-                            },
-                          }
-                        ).city.label
-                      }
-                    </p>
                   </div>
                   <Divider dashed />
                   <div className={styles.tags}>
@@ -210,20 +170,6 @@ class AccountCenter extends Component {
                     }}
                     dashed
                   />
-                  <div className={styles.team}>
-                    <div className={styles.teamTitle}>团队</div>
-                    <Row gutter={36}>
-                      {currentUser.notice &&
-                        currentUser.notice.map(item => (
-                          <Col key={item.id} lg={24} xl={12}>
-                            <Link to={item.href}>
-                              <Avatar size="small" src={item.logo} />
-                              {item.member}
-                            </Link>
-                          </Col>
-                        ))}
-                    </Row>
-                  </div>
                 </div>
               )}
             </Card>
