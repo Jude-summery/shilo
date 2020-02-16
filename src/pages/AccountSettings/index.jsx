@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { GridContent } from '@ant-design/pro-layout'
-import { Menu, Row, Col, Card, Form, Input } from 'antd';
+import { Menu, Row, Col, Card, Form, Input, Button } from 'antd';
 import { connect } from 'dva';
 
 class AccountSettings extends Component {
@@ -18,23 +18,23 @@ class AccountSettings extends Component {
   handleSubmit = e => {
     e.preventDefault();
     const { form, dispatch } = this.props;
-    // form.validateFields(
-    //   {
-    //     force: true,
-    //   },
-    //   (err, values) => {
-    //     if (!err) {
-    //       dispatch({
-    //         type: 'userRegister/submit',
-    //         payload: values,
-    //       });
-    //     }
-    //   },
-    // );
+    form.validateFields(
+      {
+        force: true,
+      },
+      (err, values) => {
+        if (!err) {
+          dispatch({
+            type: 'accountSettings/submit',
+            payload: values,
+          });
+        }
+      },
+    );
   };
 
   render() {
-    const { form } = this.props;
+    const { form, submitting } = this.props;
     const { getFieldDecorator } = form;
     const title = ['基本信息'][this.state.current]
     return(
@@ -74,6 +74,16 @@ class AccountSettings extends Component {
                     <Input />
                   )}
                 </Form.Item>
+                <Form.Item>
+                  <Button
+                    size="large"
+                    loading={submitting}
+                    type="primary"
+                    htmlType="submit"
+                  >
+                    提交
+                  </Button>
+                </Form.Item>
               </Form>
             </Card>
           </Col>
@@ -83,6 +93,7 @@ class AccountSettings extends Component {
   }
 }
 
-export default connect(({ accountSettings }) => ({
-  accountSettings
+export default connect(({ accountSettings, loading }) => ({
+  accountSettings,
+  submitting: loading.effects['accountSettings/submit'],
 }))(Form.create()(AccountSettings))
