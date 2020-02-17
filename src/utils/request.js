@@ -4,6 +4,7 @@
  */
 import { extend } from 'umi-request';
 import { notification } from 'antd';
+import { delCookie } from './utils';
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
   201: '新建或修改数据成功。',
@@ -57,12 +58,15 @@ const request = extend({
 request.use(async (ctx, next) => {
   await next()
   const { res } = ctx
-  const { statusText = 'error' } = res
+  const { statusText = 'error', status } = res
   if(statusText != 'success'){
     notification.error({
       message: `错误`,
       description: res.message,
     });
+    if(status === 401){
+      location.href = '/user/userlogin'
+    }
   }
 })
 

@@ -1,4 +1,5 @@
 const { signupUpdate } = require ('./service')
+import { notification } from 'antd';
 
 const Model = {
   namespace: 'accountSettings',
@@ -10,8 +11,12 @@ const Model = {
   },
   effects: {
     *submit(action, { call, put }){
-      console.log(111)
       const response =  yield call(signupUpdate, action.payload)
+      if(response.status === 200){
+        notification.success({
+          message: '修改成功'
+        })
+      }
     }
   }
 }
