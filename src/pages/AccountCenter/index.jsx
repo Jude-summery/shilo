@@ -123,7 +123,7 @@ class AccountCenter extends Component {
                 <div>
                   <div className={styles.avatarHolder}>
                     <img alt="" src={currentUser.avatar} />
-                    <div className={styles.name}>{currentUser.name}</div>
+                    <div className={styles.name}>{currentUser.nickname || currentUser.name}</div>
                     <div>{currentUser.signature}</div>
                   </div>
                   <div className={styles.detail}>

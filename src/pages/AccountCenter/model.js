@@ -12,7 +12,7 @@ const Model = {
       const test = yield call(queryTest);
       yield put({
         type: 'saveCurrentUser',
-        payload: response,
+        payload: response.data,
       });
     },
 
