@@ -1,4 +1,4 @@
-import { queryCurrent, queryFakeList, queryTest } from './service';
+import { queryCurrent, queryPosts } from './service';
 
 const Model = {
   namespace: 'accountCenter',
@@ -9,19 +9,18 @@ const Model = {
   effects: {
     *fetchCurrent(_, { call, put }) {
       const response = yield call(queryCurrent);
-      const test = yield call(queryTest);
       yield put({
         type: 'saveCurrentUser',
         payload: response.data,
       });
     },
 
-    *fetch({ payload }, { call, put }) {
-      const response = yield call(queryFakeList, payload);
-      yield put({
-        type: 'queryList',
-        payload: Array.isArray(response) ? response : [],
-      });
+    *fetchPosts({ payload }, { call, put }) {
+      const response = yield call(queryPosts, payload);
+      // yield put({
+      //   type: 'queryList',
+      //   payload: Array.isArray(response) ? response : [],
+      // });
     },
   },
   reducers: {

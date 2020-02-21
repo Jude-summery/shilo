@@ -5,9 +5,14 @@ import { connect } from 'dva';
 
 class AccountSettings extends Component {
 
-  state = {
-    current: '0',
-    loading: false
+  constructor(props){
+    super()
+
+    this.state = {
+      current: '0',
+      loading: false,
+      imageUrl: `/api/user/get/avatar?imgid=${props.currentUser.avatar}` || ''
+    }
   }
 
   getBase64 = (img, callback) => {
@@ -70,13 +75,13 @@ class AccountSettings extends Component {
 
   render() {
     const { imageUrl } = this.state;
-    const { form, submitting } = this.props;
+    const { form, submitting, currentUser } = this.props;
     const { getFieldDecorator } = form;
     const title = ['基本信息'][this.state.current];
     const uploadButton = (
       <div>
         <Icon type={this.state.loading ? 'loading' : 'plus'} />
-        <div className="ant-upload-text">Upload</div>
+        <div className="ant-upload-text">上传头像</div>
       </div>
     );
     return(
@@ -146,7 +151,17 @@ class AccountSettings extends Component {
   }
 }
 
-export default connect(({ accountSettings, loading }) => ({
+export default connect(({ accountSettings, user, loading }) => ({
+  currentUser: user.currentUser,
   accountSettings,
   submitting: loading.effects['accountSettings/submit'],
-}))(Form.create()(AccountSettings))
+}))(Form.create({
+  mapPropsToFields(props) {
+    return {
+      email:  Form.createFormField({value: props.currentUser.email}),
+      nickname: Form.createFormField({value: props.currentUser.nickname}),
+      signature: Form.createFormField({value: props.currentUser.signature}),
+      title:Form.createFormField({value: props.currentUser.title})
+    }
+  }
+})(AccountSettings))
