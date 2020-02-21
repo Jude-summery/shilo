@@ -42,7 +42,8 @@ class AccountCenter extends Component {
       type: 'accountCenter/fetchCurrent',
     });
     dispatch({
-      type: 'accountCenter/fetch',
+      type: 'accountCenter/fetchPosts',
+      payload: {author: this.props.currentUser._id}
     });
   }
 
@@ -122,7 +123,7 @@ class AccountCenter extends Component {
               {!dataLoading && (
                 <div>
                   <div className={styles.avatarHolder}>
-                    <img alt="" src={`/api/user/get/avatar?imgid=${currentUser.avatar}`} />
+                    <img alt="avatar" src={`/api/user/get/avatar?imgid=${currentUser.avatar}`} />
                     <div className={styles.name}>{currentUser.nickname || currentUser.name}</div>
                     <div>{currentUser.signature}</div>
                   </div>
