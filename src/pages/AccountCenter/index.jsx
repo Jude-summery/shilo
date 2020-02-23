@@ -8,24 +8,6 @@ import Articles from './components/Articles';
 import Applications from './components/Applications';
 import styles from './Center.less';
 
-const operationTabList = [
-  {
-    key: 'articles',
-    tab: (
-      <span>
-        文章{' '}
-        <span
-          style={{
-            fontSize: 14,
-          }}
-        >
-          (8)
-        </span>
-      </span>
-    ),
-  }
-];
-
 class AccountCenter extends Component {
   state = {
     newTags: [],
@@ -45,6 +27,26 @@ class AccountCenter extends Component {
       type: 'accountCenter/fetchPosts',
       payload: {author: this.props.currentUser._id}
     });
+  }
+
+  getOperationTabList = () => {
+    return [
+      {
+        key: 'articles',
+        tab: (
+          <span>
+            文章{' '}
+            <span
+              style={{
+                fontSize: 14,
+              }}
+            >
+              ({(this.props.list && this.props.list.length) || 0})
+            </span>
+          </span>
+        ),
+      }
+    ]
   }
 
   onTabChange = key => {
@@ -179,7 +181,7 @@ class AccountCenter extends Component {
             <Card
               className={styles.tabsCard}
               bordered={false}
-              tabList={operationTabList}
+              tabList={this.getOperationTabList()}
               activeTabKey={tabKey}
               onTabChange={this.onTabChange}
             >
