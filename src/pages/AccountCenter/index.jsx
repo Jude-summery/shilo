@@ -29,7 +29,7 @@ class AccountCenter extends Component {
     });
   }
 
-  getOperationTabList = () => {
+  getOperationTabList = (listLength) => {
     return [
       {
         key: 'articles',
@@ -41,7 +41,7 @@ class AccountCenter extends Component {
                 fontSize: 14,
               }}
             >
-              ({(this.props.list && this.props.list.length) || 0})
+              ({listLength || 0})
             </span>
           </span>
         ),
@@ -115,8 +115,9 @@ class AccountCenter extends Component {
 
   render() {
     const { newTags = [], inputVisible, inputValue, tabKey } = this.state;
-    const { currentUser = {}, currentUserLoading } = this.props;
+    const { currentUser = {}, currentUserLoading, list = [] } = this.props;
     const dataLoading = currentUserLoading || !(currentUser && Object.keys(currentUser).length);
+    const listLength = list.length || 0;
     return (
       <GridContent>
         <Row gutter={24}>
@@ -187,7 +188,7 @@ class AccountCenter extends Component {
             <Card
               className={styles.tabsCard}
               bordered={false}
-              tabList={this.getOperationTabList()}
+              tabList={this.getOperationTabList(listLength)}
               activeTabKey={tabKey}
               onTabChange={this.onTabChange}
             >
@@ -201,6 +202,7 @@ class AccountCenter extends Component {
 }
 
 export default connect(({ loading, accountCenter }) => ({
+  list: accountCenter.list,
   currentUser: accountCenter.currentUser,
   currentUserLoading: loading.effects['accountCenter/fetchCurrent'],
 }))(AccountCenter);
