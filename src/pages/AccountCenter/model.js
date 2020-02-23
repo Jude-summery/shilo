@@ -1,10 +1,10 @@
-import { queryCurrent, queryPosts } from './service';
+import { queryCurrent, queryPosts, userUpdate } from './service';
 
 const Model = {
   namespace: 'accountCenter',
   state: {
     currentUser: {},
-    list: [],
+    list: []
   },
   effects: {
     *fetchCurrent(_, { call, put }) {
@@ -22,6 +22,20 @@ const Model = {
         payload: Array.isArray(response) ? response : [],
       });
     },
+
+    *updateUser({ payload }, { call, put, select }) {
+      const currentUser = (yield select())['accountCenter']
+      const response = yield call(userUpdate, payload);
+      if(response.state === 200){
+        yield put({
+          type: saveCurrentUser,
+          payload: {
+            ...currentUser,
+            payload
+          }
+        })
+      }
+    }
   },
   reducers: {
     saveCurrentUser(state, action) {
@@ -30,7 +44,7 @@ const Model = {
 
     queryList(state, action) {
       return { ...state, list: action.payload };
-    },
+    }
   },
 };
 export default Model;

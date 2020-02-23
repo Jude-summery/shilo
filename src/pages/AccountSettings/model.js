@@ -1,4 +1,4 @@
-const { signupUpdate } = require ('./service')
+const { userUpdate } = require ('./service')
 import { notification } from 'antd';
 
 const Model = {
@@ -11,7 +11,7 @@ const Model = {
   },
   effects: {
     *submit(action, { call, put }){
-      const response =  yield call(signupUpdate, action.payload)
+      const response =  yield call(userUpdate, action.payload)
       if(response.status === 200){
         notification.success({
           message: '修改成功'

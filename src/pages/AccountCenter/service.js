@@ -8,3 +8,9 @@ export async function queryPosts(params) {
     params,
   });
 }
+export async function userUpdate(params) {
+  return request('/api/user/update', {
+    method: 'POST',
+    data: params,
+  });
+}

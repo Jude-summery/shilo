@@ -91,6 +91,12 @@ class AccountCenter extends Component {
         },
       ];
     }
+    this.props.dispatch({
+      type: 'accountCenter/updateUser',
+      payload: {
+        tags: JSON.stringify((JSON.parse(this.props.currentUser.tags) || []).concat(newTags))
+      }
+    })
 
     this.setState({
       newTags,
@@ -125,7 +131,7 @@ class AccountCenter extends Component {
               {!dataLoading && (
                 <div>
                   <div className={styles.avatarHolder}>
-                    <img alt="avatar" src={`/api/user/get/avatar?imgid=${currentUser.avatar}`} />
+                    <img alt="avatar" src={`/api/user/avatar/get?imgid=${currentUser.avatar}`} />
                     <div className={styles.name}>{currentUser.nickname || currentUser.name}</div>
                     <div>{currentUser.signature}</div>
                   </div>
@@ -138,7 +144,7 @@ class AccountCenter extends Component {
                   <Divider dashed />
                   <div className={styles.tags}>
                     <div className={styles.tagsTitle}>标签</div>
-                    {(currentUser.tags || []).concat(newTags).map(item => (
+                    {(JSON.parse(currentUser.tags) || []).concat(newTags).map(item => (
                       <Tag key={item.key}>{item.label}</Tag>
                     ))}
                     {inputVisible && (
