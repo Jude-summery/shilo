@@ -11,7 +11,7 @@ class AccountSettings extends Component {
     this.state = {
       current: '0',
       loading: false,
-      imageUrl: `/api/user/get/avatar?imgid=${props.currentUser.avatar}` || ''
+      imageUrl: `/api/user/avatar/get?imgid=${props.currentUser.avatar}` || ''
     }
   }
 
@@ -101,7 +101,7 @@ class AccountSettings extends Component {
                 listType="picture-card"
                 className="avatar-uploader"
                 showUploadList={false}
-                action="/api/user/update/avatar"
+                action="/api/user/avatar/update"
                 beforeUpload={this.beforeUpload}
                 onChange={this.handleChange}
               >
