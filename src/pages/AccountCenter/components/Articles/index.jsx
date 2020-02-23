@@ -1,4 +1,4 @@
-import { Icon, List, Tag } from 'antd';
+import { Icon, List, Tag, Button } from 'antd';
 import React from 'react';
 import { connect } from 'dva';
 import ArticleListContent from '../ArticleListContent';
@@ -20,7 +20,8 @@ const Articles = props => {
   );
 
   return (
-    <List
+    <div>
+<List
       size="large"
       className={styles.articleList}
       rowKey="id"
@@ -53,6 +54,13 @@ const Articles = props => {
         </List.Item>
       )}
     />
+    {!list.length && (<div style={{textAlign: 'center'}}>
+      <Button type='primary' style={{margin: '0 auto'}}>写文章</Button>
+    </div>)}
+
+    
+    </div>
+    
   );
 };
 

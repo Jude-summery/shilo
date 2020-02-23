@@ -123,6 +123,19 @@ export default {
               component: './AccountSettings',
             },
             {
+              name: '文章',
+              icon: 'read',
+              path: '/article',
+              routes: [
+                {
+                  name: '写文章',
+                  icon: 'edit',
+                  path: '/article/edit',
+                  component: './ArticleEdit',
+                },
+              ]
+            },
+            {
               component: './404',
             },
           ],

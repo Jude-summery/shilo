@@ -16,10 +16,10 @@ const Model = {
     },
 
     *fetchPosts({ payload }, { call, put }) {
-      const response = yield call(queryPosts, payload);
+      const {data} = yield call(queryPosts, payload);
       yield put({
         type: 'queryList',
-        payload: Array.isArray(response) ? response : [],
+        payload: Array.isArray(data) ? data : [],
       });
     },
 
