@@ -38,16 +38,9 @@ const Articles = props => {
         >
           <List.Item.Meta
             title={
-              <a className={styles.listItemMetaTitle} href={item.href}>
+              <a className={styles.listItemMetaTitle} href={`/article/view?postId=${item._id}`}>
                 {item.title}
               </a>
-            }
-            description={
-              <span>
-                <Tag>Ant Design</Tag>
-                <Tag>设计语言</Tag>
-                <Tag>蚂蚁金服</Tag>
-              </span>
             }
           />
           <ArticleListContent data={item} />

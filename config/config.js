@@ -133,6 +133,10 @@ export default {
                   path: '/article/edit',
                   component: './ArticleEdit',
                 },
+                {
+                  path: '/article/view',
+                  component: './ArticleView',
+                }
               ]
             },
             {

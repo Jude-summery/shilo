@@ -71,4 +71,15 @@ export const delCookie = (name) => {
   var cval=getCookie(name);
   if(cval!=null)
   document.cookie= name + "="+cval+";expires="+exp.toGMTString();
-}
+};
+export const parseLocationSearch = (search) => {
+  const queryObj = {}
+  if(search != ''){
+    const queryString = search.slice(search.indexOf('?') + 1)
+    const queryArray = queryString.split('&')
+    queryArray.map(item => {
+      queryObj[item.split('=')[0]] = item.split('=')[1]
+    })
+  }
+  return queryObj
+};
