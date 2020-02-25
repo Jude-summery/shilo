@@ -38,7 +38,7 @@ const Articles = props => {
         >
           <List.Item.Meta
             title={
-              <a className={styles.listItemMetaTitle} href={`/article/view?postId=${item._id}`}>
+              <a className={styles.listItemMetaTitle} href={`/view?postId=${item._id}`}>
                 {item.title}
               </a>
             }

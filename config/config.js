@@ -132,12 +132,12 @@ export default {
                   icon: 'edit',
                   path: '/article/edit',
                   component: './ArticleEdit',
-                },
-                {
-                  path: '/article/view',
-                  component: './ArticleView',
                 }
               ]
+            },
+            {
+              path: '/view',
+              component: './ArticleView',
             },
             {
               component: './404',
