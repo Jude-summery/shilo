@@ -5,3 +5,17 @@ export async function getPostById(params) {
     params: params
   });
 }
+
+export async function addComment(params) {
+  return request('/api/comments/add', {
+    method: 'POST',
+    data: params,
+  });
+}
+
+export async function deleteComment(params) {
+  return request('/api/comments/delete', {
+    method: 'POST',
+    data: params,
+  });
+}

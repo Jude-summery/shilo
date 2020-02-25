@@ -1,17 +1,15 @@
-const { getPostById } = require ('./service')
+const { getPostById, addComment, deleteComment } = require ('./service')
 import { notification } from 'antd';
 
 const Model = {
   namespace: 'articleView',
   state: {
-    data: {
-      post: null,
-      comments: []
-    }
+    post: null,
+    comments: []
   },
   reducers: {
-    changeData(state, action){
-      return { ...state, data: action.payload };
+    changePost(state, action){
+      return { ...state, ...action.payload };
     }
   },
   effects: {
@@ -23,7 +21,39 @@ const Model = {
           payload: response.data
         })
       }
-    }
+    },
+    *addComment(action, { call, put }){
+      const response =  yield call(addComment, action.payload)
+      if(response.status === 200){
+        notification.success({
+          message: '评论成功'
+        })
+        yield put({
+          type: 'changePost',
+          payload: {
+            comments: response.data
+          }
+        })
+      }
+    },
+    *deleteComment(action, { call, put }){
+      const response =  yield call(deleteComment, action.payload)
+      if(response.status === 200 && response.statusText == 'success'){
+        notification.success({
+          message: '评论删除成功'
+        })
+        yield put({
+          type: 'changePost',
+          payload: {
+            comments: response.data
+          }
+        })
+      } else {
+        notification.error({
+          message: response.message
+        })
+      }
+    },
   }
 }
 export default Model;
