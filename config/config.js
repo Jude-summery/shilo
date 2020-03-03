@@ -69,7 +69,7 @@ export default {
   plugins,
   hash: true,
   history: 'hash',
-  publicPath: '/',
+  publicPath: './',
   targets: {
     ie: 11,
   },
