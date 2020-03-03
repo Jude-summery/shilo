@@ -24,21 +24,21 @@ const Articles = props => {
 <List
       size="large"
       className={styles.articleList}
-      rowKey="id"
+      rowKey="_id"
       itemLayout="vertical"
       dataSource={list}
       renderItem={item => (
         <List.Item
-          key={item.id}
+          key={item._id}
           actions={[
-            <IconText key="star" type="star-o" text={item.star} />,
-            <IconText key="like" type="like-o" text={item.like} />,
-            <IconText key="message" type="message" text={item.message} />,
+            // <IconText key="star" type="star-o" text={item.star} />,
+            // <IconText key="like" type="like-o" text={item.like} />,
+            // <IconText key="message" type="message" text={item.message} />,
           ]}
         >
           <List.Item.Meta
             title={
-              <a className={styles.listItemMetaTitle} href={`/view?postId=${item._id}`}>
+              <a className={styles.listItemMetaTitle} href={`#/view?postId=${item._id}`}>
                 {item.title}
               </a>
             }

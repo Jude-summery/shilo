@@ -20,7 +20,7 @@ class ArticleView extends Component {
   componentDidMount() {
     this.props.dispatch({
       type: 'articleView/getPost',
-      payload: parseLocationSearch(location.search)
+      payload: parseLocationSearch(location.hash)
     })
   }
 
