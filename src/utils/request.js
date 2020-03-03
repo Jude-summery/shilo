@@ -65,7 +65,7 @@ request.use(async (ctx, next) => {
       description: res.message,
     });
     if(status === 401){
-      location.href = '/user/userlogin'
+      location.href = '#/user/userlogin'
     }
   }
 })

@@ -72,10 +72,10 @@ export const delCookie = (name) => {
   if(cval!=null)
   document.cookie= name + "="+cval+";expires="+exp.toGMTString();
 };
-export const parseLocationSearch = (search) => {
+export const parseLocationSearch = (hash) => {
   const queryObj = {}
-  if(search != ''){
-    const queryString = search.slice(search.indexOf('?') + 1)
+  if(hash != ''){
+    const queryString = hash.slice(hash.indexOf('?') + 1)
     const queryArray = queryString.split('&')
     queryArray.map(item => {
       queryObj[item.split('=')[0]] = item.split('=')[1]
