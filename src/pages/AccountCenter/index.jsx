@@ -134,18 +134,18 @@ class AccountCenter extends Component {
                   <div className={styles.avatarHolder}>
                     <img alt="avatar" src={`/api/user/avatar/get?imgid=${currentUser.avatar}`} />
                     <div className={styles.name}>{currentUser.nickname || currentUser.name}</div>
-                    <div>{currentUser.signature}</div>
+                    <div>{currentUser.signature || '这个人什么也没写'}</div>
                   </div>
                   <div className={styles.detail}>
                     <p>
                       <i className={styles.title} />
-                      {currentUser.title}
+                      {currentUser.title || '无名之辈'}
                     </p>
                   </div>
                   <Divider dashed />
                   <div className={styles.tags}>
                     <div className={styles.tagsTitle}>标签</div>
-                    {(JSON.parse(currentUser.tags) || []).concat(newTags).map(item => (
+                    {currentUser.tags && (JSON.parse(currentUser.tags) || []).concat(newTags).map(item => (
                       <Tag key={item.key}>{item.label}</Tag>
                     ))}
                     {inputVisible && (
