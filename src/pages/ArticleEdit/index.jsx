@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { GridContent } from '@ant-design/pro-layout'
 import { Row, Col, Card, Form, Input, Button, Upload, Icon, message, Avatar } from 'antd';
 import { connect } from 'dva';
+import BraftEditor from 'braft-editor'
+import 'braft-editor/dist/index.css'
+import styles from './index.less';
 
 class ArticleEdit extends Component {
 
@@ -29,12 +32,12 @@ class ArticleEdit extends Component {
         force: true,
       },
       (err, values) => {
-        if (!err) {
-          dispatch({
-            type: 'articleEdit/submit',
-            payload: values,
-          });
-        }
+          if (!err) {
+            dispatch({
+              type: 'articleEdit/submit',
+              payload: values,
+            });
+          }
       },
     );
   };
@@ -44,6 +47,7 @@ class ArticleEdit extends Component {
     const { form, submitting } = this.props;
     const { getFieldDecorator } = form;
     const title = '写文章';
+    const controls = ['bold', 'italic', 'underline', 'text-color', 'separator', 'link', 'separator']
     return (
       <GridContent>
         <Row gutter={24} type="flex" justify="center">
@@ -56,7 +60,9 @@ class ArticleEdit extends Component {
                 <Col lg={21} md={24}>
                   <Form onSubmit={this.handleSubmit}>
                     <Form.Item>
-                      {getFieldDecorator('title')(
+                      {getFieldDecorator('title', {
+                        rules: [{ required: true, message: '请填写文章标题' }]
+                      })(
                         <Input
                           size="large"
                           placeholder="文章标题"
@@ -64,11 +70,19 @@ class ArticleEdit extends Component {
                       )}
                     </Form.Item>
                     <Form.Item>
-                      {getFieldDecorator('content')(
-                        <Input.TextArea
-                          rows={20}
-                          placeholder="文章内容"
-                        />
+                      {getFieldDecorator('content', {
+                        rules: [{
+                          required: true,
+                          validator: (_, value, callback) => {
+                            if (value.isEmpty()) {
+                              callback('请输入正文内容')
+                            } else {
+                              callback()
+                            }
+                          }
+                        }],
+                      })(
+                        <BraftEditor controls={controls} className={styles['braft-editor']} />
                       )}
                     </Form.Item>
                     <Form.Item>

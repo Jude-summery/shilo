@@ -11,7 +11,8 @@ const Model = {
   },
   effects: {
     *submit(action, { call, put }){
-      const response =  yield call(postsCreate, action.payload)
+      const content = action.payload.content.toRAW()
+      const response =  yield call(postsCreate, {...action.payload, content})
       if(response.status === 200){
         notification.success({
           message: '新增成功'
