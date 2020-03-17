@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { GridContent } from '@ant-design/pro-layout'
-import { Row, Col, Card, Form, Input, Button, Upload, Icon, message, Avatar } from 'antd';
+import { Row, Col, Card, Form, Input, Button, Upload, Icon, message, Avatar, Skeleton, Empty } from 'antd';
 import { connect } from 'dva';
 import { parseLocationSearch } from '@/utils/utils';
-import { getFileItem } from 'antd/lib/upload/utils';
+import BraftEditor from 'braft-editor'
+import 'braft-editor/dist/output.css'
 
 class ArticleView extends Component {
 
@@ -22,6 +23,7 @@ class ArticleView extends Component {
       type: 'articleView/getPost',
       payload: parseLocationSearch(location.hash)
     })
+
   }
 
   parseParam = (search) => {
@@ -76,73 +78,98 @@ class ArticleView extends Component {
   }
 
   getCommentCard = (item) => {
-    return(
-      <Card style={{marginBottom: 20, height: 120}}>
+    return (
+      <Card style={{ marginBottom: 20, height: 120 }}>
         <Row>
           <Col span={1}><Avatar src={`/api/user/avatar/get?imgid=${item.author.avatar}`} icon="user" /></Col>
           <Col span={23}>
             <p>{item.author.nickname}:</p>
-            <p style={{marginLeft: 20}}>{item.content}</p>
-            <p style={{float: 'right', color: '#d9d9d9'}}>{item.created_at} <a onClick={this.onDeleteComment(item)}><Icon type="delete" style={{color: 'rgba(232,17,35,0.3)'}} /></a></p>
+            <p style={{ marginLeft: 20 }}>{item.content}</p>
+            <p style={{ float: 'right', color: '#d9d9d9' }}>{item.created_at} <a onClick={this.onDeleteComment(item)}><Icon type="delete" style={{ color: 'rgba(232,17,35,0.3)' }} /></a></p>
           </Col>
         </Row>
-    </Card>
+      </Card>
     )
   }
 
   render() {
-    const { imageUrl } = this.state;
-    const { form, articleView } = this.props;
+    const { form, articleView, getPostLoading } = this.props;
     const { getFieldDecorator } = form;
     const { post, comments } = articleView
     const title = post && post.title
     return (
-      post == null ?
-        <p>文章不存在</p> :
-        <GridContent>
-          <Row gutter={[24, 24]} type="flex" justify="center">
-            <Col lg={18} md={24}>
-              <Card title={title} bordered={false}>
-                <Row gutter={24}>
-                  <Col lg={24} md={24}>
-                    {post.content}
+      <GridContent>
+        {
+          getPostLoading ?
+            <Row gutter={[24, 24]} type="flex" justify="center">
+              <Col lg={18} md={24}>
+                <Card bordered={false}>
+                  <Row gutter={24}>
+                    <Col lg={24} md={24}>
+                      <Skeleton active paragraph={{ rows: 4 }} />
+                    </Col>
+                  </Row>
+                </Card>
+              </Col>
+            </Row> :
+            post == null ?
+              <Row gutter={[24, 24]} type="flex" justify="center">
+                <Col lg={18} md={24}>
+                  <Card bordered={false}>
+                    <Row gutter={24}>
+                      <Col lg={24} md={24}>
+                        <Empty description={false} />
+                      </Col>
+                    </Row>
+                  </Card>
+                </Col>
+              </Row> :
+              <>
+                <Row gutter={[24, 24]} type="flex" justify="center">
+                  <Col lg={18} md={24}>
+                    <Card title={title} bordered={false}>
+                      <Row gutter={24}>
+                        <Col lg={24} md={24}>
+                          <div className="braft-output-content" dangerouslySetInnerHTML={{ __html: BraftEditor.createEditorState(post.content).toHTML() }}></div>
+                        </Col>
+                      </Row>
+                    </Card>
                   </Col>
                 </Row>
-              </Card>
-            </Col>
-          </Row>
-          <Row gutter={[24, 24]} type="flex" justify="center">
-            <Col lg={18} md={24}>
-              <Card bordered={false}>
-                <Row gutter={24}>
-                  <Col lg={24} md={24}>
-                    <h4>评论区</h4>
-                    <Form onSubmit={this.handleSubmit}>
-                      <Form.Item style={{marginBottom: '0'}}>
-                        {getFieldDecorator('comment')(
-                          <Input.TextArea
-                            rows={3}
-                            size="middle"
-                            placeholder="分享你的见解..."
-                          />
-                        )}
-                      </Form.Item>
-                      <Form.Item>
-                        <Button
-                          type="primary"
-                          htmlType="submit"
-                        >
-                          提交
-                      </Button>
-                      </Form.Item>
-                    </Form>
-                    {comments.map(item=>this.getCommentCard(item))}
+                <Row gutter={[24, 24]} type="flex" justify="center">
+                  <Col lg={18} md={24}>
+                    <Card bordered={false}>
+                      <Row gutter={24}>
+                        <Col lg={24} md={24}>
+                          <h4>评论区</h4>
+                          <Form onSubmit={this.handleSubmit}>
+                            <Form.Item style={{ marginBottom: '0' }}>
+                              {getFieldDecorator('comment')(
+                                <Input.TextArea
+                                  rows={3}
+                                  size="middle"
+                                  placeholder="分享你的见解..."
+                                />
+                              )}
+                            </Form.Item>
+                            <Form.Item>
+                              <Button
+                                type="primary"
+                                htmlType="submit"
+                              >
+                                提交
+                              </Button>
+                            </Form.Item>
+                          </Form>
+                          {comments.map(item => this.getCommentCard(item))}
+                        </Col>
+                      </Row>
+                    </Card>
                   </Col>
                 </Row>
-              </Card>
-            </Col>
-          </Row>
-        </GridContent>
+              </>
+        }
+      </GridContent>
     )
   }
 }
@@ -150,5 +177,5 @@ class ArticleView extends Component {
 export default connect(({ articleView, user, loading }) => ({
   currentUser: user.currentUser,
   articleView,
-  submitting: loading.effects['accountSettings/submit'],
+  getPostLoading: loading.effects['articleView/getPost'],
 }))(Form.create()(ArticleView))
