@@ -32,12 +32,12 @@ class ArticleEdit extends Component {
         force: true,
       },
       (err, values) => {
-          if (!err) {
-            dispatch({
-              type: 'articleEdit/submit',
-              payload: values,
-            });
-          }
+        if (!err) {
+          dispatch({
+            type: 'articleEdit/submit',
+            payload: values,
+          });
+        }
       },
     );
   };
@@ -50,15 +50,12 @@ class ArticleEdit extends Component {
     const controls = ['bold', 'italic', 'underline', 'text-color', 'separator', 'link', 'separator']
     return (
       <GridContent>
-        <Row gutter={24} type="flex" justify="center">
-          <Col lg={18} md={24}>
+        <Row type="flex" justify="center">
+          <Col lg={18} md={24} className='edit'>
             <Card title={title} bordered={false}>
-              <Row gutter={24}>
-                <Col lg={2} md={0}>
-                  <Avatar shape="square" src={imageUrl} size={64} icon="user" />
-                </Col>
-                <Col lg={21} md={24}>
-                  <Form onSubmit={this.handleSubmit}>
+              <Row type="flex" justify="center">
+                <Col lg={20} md={24}>
+                <Form onSubmit={this.handleSubmit}>
                     <Form.Item>
                       {getFieldDecorator('title', {
                         rules: [{ required: true, message: '请填写文章标题' }]

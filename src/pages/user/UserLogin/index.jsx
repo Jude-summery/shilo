@@ -134,11 +134,11 @@ class UserLogin extends Component {
           <Submit loading={submitting}>
             登录
           </Submit>
-          <div className={styles.other}>
+          {/* <div className={styles.other}>
             <Link className={styles.register} to="/user/userregister">
               注册账户
             </Link>
-          </div>
+          </div> */}
         </LoginComponents>
       </div>
     );
