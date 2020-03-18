@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { GridContent } from '@ant-design/pro-layout'
 import { Row, Col, Card, Form, Input, Button, Upload, Icon, message, Avatar, Skeleton, Empty } from 'antd';
+import { DeleteOutlined, EditOutlined } from '@ant-design/icons'
 import { connect } from 'dva';
 import { parseLocationSearch } from '@/utils/utils';
 import BraftEditor from 'braft-editor'
 import 'braft-editor/dist/output.css'
+import styles from './index.less'
 
 class ArticleView extends Component {
 
@@ -131,6 +133,8 @@ class ArticleView extends Component {
                       <Row gutter={24}>
                         <Col lg={24} md={24}>
                           <div className="braft-output-content" dangerouslySetInnerHTML={{ __html: BraftEditor.createEditorState(post.content).toHTML() }}></div>
+                          <EditOutlined className={styles.iconEdit} />
+                          <DeleteOutlined className={styles.iconDelete} />
                         </Col>
                       </Row>
                     </Card>
