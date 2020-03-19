@@ -94,11 +94,17 @@ class ArticleView extends Component {
     )
   }
 
+  onEdit = (id) => {
+    return () => {
+      location.href = `#/article/edit?postId=${id}`
+    }
+  }
+
   render() {
     const { form, articleView, getPostLoading } = this.props;
     const { getFieldDecorator } = form;
-    const { post, comments } = articleView
-    const title = post && post.title
+    const { post, comments } = articleView;
+    const title = post && post.title;
     return (
       <GridContent>
         {
@@ -133,7 +139,7 @@ class ArticleView extends Component {
                       <Row gutter={24}>
                         <Col lg={24} md={24}>
                           <div className="braft-output-content" dangerouslySetInnerHTML={{ __html: BraftEditor.createEditorState(post.content).toHTML() }}></div>
-                          <EditOutlined className={styles.iconEdit} />
+                          <EditOutlined className={styles.iconEdit} onClick={this.onEdit(post._id)} />
                           <DeleteOutlined className={styles.iconDelete} />
                         </Col>
                       </Row>
