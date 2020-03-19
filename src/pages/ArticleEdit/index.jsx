@@ -18,6 +18,26 @@ class ArticleEdit extends Component {
     }
   }
 
+  componentDidMount() {
+    const postId = this.props.router.location.query.postId
+    if(postId){
+      this.props.dispatch({
+        type: 'articleEdit/getPost',
+        payload: {postId: postId},
+        callback: (data) => {
+          if(data){
+            const { title, content } = data.post
+            this.editorInstance.setValue(BraftEditor.createEditorState(content))
+            this.props.form.setFieldsValue({
+              title: title,
+              content: content
+            })
+          }
+        }
+      })
+    }
+  }
+
   handleClick = e => {
     this.setState({
       current: e.key,
@@ -79,7 +99,11 @@ class ArticleEdit extends Component {
                           }
                         }],
                       })(
-                        <BraftEditor controls={controls} className={styles['braft-editor']} />
+                        <BraftEditor 
+                        controls={controls}
+                        className={styles['braft-editor']}
+                        ref={instance => this.editorInstance = instance}
+                        />
                       )}
                     </Form.Item>
                     <Form.Item>
@@ -103,7 +127,8 @@ class ArticleEdit extends Component {
   }
 }
 
-export default connect(({ articleEdit, user, loading }) => ({
+export default connect(({ articleEdit, user, loading, router }) => ({
+  router,
   currentUser: user.currentUser,
   articleEdit,
   submitting: loading.effects['articleEdit/submit'],

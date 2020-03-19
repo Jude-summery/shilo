@@ -6,3 +6,9 @@ export async function postsCreate(params) {
     data: params,
   });
 }
+
+export async function getPostById(params) {
+  return request('/api/posts/getOne', {
+    params: params
+  });
+}

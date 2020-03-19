@@ -1,13 +1,16 @@
-const { postsCreate } = require ('./service')
+const { postsCreate, getPostById } = require ('./service')
 import { notification } from 'antd';
 
 const Model = {
   namespace: 'articleEdit',
   state: {
-    
+    post: {},
   },
   reducers: {
-
+    changePost(state, action){
+      console.log({ ...state, ...action.payload })
+      return { ...state, ...action.payload };
+    }
   },
   effects: {
     *submit(action, { call, put }){
@@ -18,7 +21,15 @@ const Model = {
           message: '新增成功'
         })
       }
-    }
+    },
+    *getPost({ payload, callback}, { call, put }){
+      const response =  yield call(getPostById, payload)
+      if(response.status === 200){
+        if(callback && typeof callback === 'function') {
+          callback(response.data)
+        }
+      }
+    },
   }
 }
 export default Model;
