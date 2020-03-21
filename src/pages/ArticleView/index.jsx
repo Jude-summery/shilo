@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { GridContent } from '@ant-design/pro-layout'
-import { Row, Col, Card, Form, Input, Button, Upload, Icon, message, Avatar, Skeleton, Empty } from 'antd';
+import { Row, Col, Card, Form, Input, Button, Upload, Icon, message, Avatar, Skeleton, Empty, Modal } from 'antd';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons'
 import { connect } from 'dva';
 import { parseLocationSearch } from '@/utils/utils';
@@ -68,13 +68,20 @@ class ArticleView extends Component {
   };
 
   onDeleteComment = (item) => {
+    const self = this
     return () => {
-      this.props.dispatch({
-        type: 'articleView/deleteComment',
-        payload: {
-          commentId: item._id,
-          postId: item.postId
-        },
+      Modal.confirm({
+        title: '删除文章',
+        content: '确定删除该评论？',
+        onOk() {
+          self.props.dispatch({
+            type: 'articleView/deleteComment',
+            payload: {
+              commentId: item._id,
+              postId: item.postId
+            },
+          })
+        }
       })
     }
   }
@@ -97,6 +104,22 @@ class ArticleView extends Component {
   onEdit = (id) => {
     return () => {
       location.href = `#/article/edit?postId=${id}`
+    }
+  }
+
+  onRemove = (id) => {
+    const self = this
+    return () => {
+      Modal.confirm({
+        title: '删除文章',
+        content: '确定删除文章？',
+        onOk() {
+          self.props.dispatch({
+            type: 'articleView/deletePost',
+            payload: { postId: id }
+          })
+        }
+      })
     }
   }
 
@@ -140,7 +163,7 @@ class ArticleView extends Component {
                         <Col lg={24} md={24}>
                           <div className="braft-output-content" dangerouslySetInnerHTML={{ __html: BraftEditor.createEditorState(post.content).toHTML() }}></div>
                           <EditOutlined className={styles.iconEdit} onClick={this.onEdit(post._id)} />
-                          <DeleteOutlined className={styles.iconDelete} />
+                          <DeleteOutlined className={styles.iconDelete} onClick={this.onRemove(post._id)} />
                         </Col>
                       </Row>
                     </Card>
