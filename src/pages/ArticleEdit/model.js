@@ -20,6 +20,7 @@ const Model = {
         notification.success({
           message: '新增成功'
         })
+        location.href = '/'
       }
     },
     *update(action, { call, put }){
@@ -29,6 +30,7 @@ const Model = {
         notification.success({
           message: '更新成功'
         })
+        location.href = '/'
       }
     },
     *getPost({ payload, callback}, { call, put }){
