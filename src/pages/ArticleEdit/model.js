@@ -1,4 +1,4 @@
-const { postsCreate, getPostById } = require ('./service')
+const { postsCreate, getPostById, postUpdate } = require ('./service')
 import { notification } from 'antd';
 
 const Model = {
@@ -19,6 +19,15 @@ const Model = {
       if(response.status === 200){
         notification.success({
           message: '新增成功'
+        })
+      }
+    },
+    *update(action, { call, put }){
+      const content = action.payload.content.toRAW()
+      const response =  yield call(postUpdate, {...action.payload, content})
+      if(response.status === 200){
+        notification.success({
+          message: '更新成功'
         })
       }
     },

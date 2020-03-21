@@ -30,7 +30,7 @@ class ArticleEdit extends Component {
             this.editorInstance.setValue(BraftEditor.createEditorState(content))
             this.props.form.setFieldsValue({
               title: title,
-              content: content
+              content: BraftEditor.createEditorState(content)
             })
           }
         }
@@ -47,16 +47,27 @@ class ArticleEdit extends Component {
   handleSubmit = e => {
     e.preventDefault();
     const { form, dispatch } = this.props;
+    const postId = this.props.router.location.query.postId
     form.validateFields(
       {
         force: true,
       },
       (err, values) => {
         if (!err) {
-          dispatch({
-            type: 'articleEdit/submit',
-            payload: values,
-          });
+          if(postId){
+            dispatch({
+              type: 'articleEdit/update',
+              payload: {
+                ...values,
+                postId: postId
+              },
+            });
+          } else {
+            dispatch({
+              type: 'articleEdit/submit',
+              payload: values,
+            });
+          }
         }
       },
     );
