@@ -12,3 +12,10 @@ export async function getPostById(params) {
     params: params
   });
 }
+
+export async function postUpdate(params) {
+  return request('/api/posts/edit', {
+    method: 'POST',
+    data: params
+  })
+}
