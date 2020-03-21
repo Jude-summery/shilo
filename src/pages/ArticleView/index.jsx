@@ -59,7 +59,7 @@ class ArticleView extends Component {
             type: 'articleView/addComment',
             payload: {
               content: values.comment,
-              postId: parseLocationSearch(location.search).postId
+              postId: parseLocationSearch(location.hash).postId
             },
           });
         }
