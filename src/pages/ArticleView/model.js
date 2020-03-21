@@ -1,4 +1,4 @@
-const { getPostById, addComment, deleteComment } = require ('./service')
+const { getPostById, addComment, deleteComment, deletePost } = require ('./service')
 import { notification } from 'antd';
 
 const Model = {
@@ -54,6 +54,19 @@ const Model = {
         })
       }
     },
+    *deletePost(action, { call, put }){
+      const response = yield call(deletePost, action.payload)
+      if(response.status === 200 && response.statusText === 'success'){
+        notification.success({
+          message: '文章删除成功'
+        })
+        location.href = '/'
+      } else {
+        notification.success({
+          message: response.message
+        })
+      }
+    }
   }
 }
 export default Model;

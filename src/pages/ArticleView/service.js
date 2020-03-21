@@ -19,3 +19,10 @@ export async function deleteComment(params) {
     data: params,
   });
 }
+
+export async function deletePost(params) {
+  return request('/api/posts/remove', {
+    method: 'post',
+    data: params
+  })
+}
