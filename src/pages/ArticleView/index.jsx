@@ -7,6 +7,7 @@ import { parseLocationSearch } from '@/utils/utils';
 import BraftEditor from 'braft-editor'
 import 'braft-editor/dist/output.css'
 import styles from './index.less'
+import xss from 'xss'
 
 class ArticleView extends Component {
 
@@ -161,7 +162,7 @@ class ArticleView extends Component {
                     <Card title={title} bordered={false}>
                       <Row gutter={24}>
                         <Col lg={24} md={24}>
-                          <div className="braft-output-content" dangerouslySetInnerHTML={{ __html: BraftEditor.createEditorState(post.content).toHTML() }}></div>
+                          <div className="braft-output-content" dangerouslySetInnerHTML={{ __html: xss(BraftEditor.createEditorState(post.content).toHTML()) }}></div>
                           <EditOutlined className={styles.iconEdit} onClick={this.onEdit(post._id)} />
                           <DeleteOutlined className={styles.iconDelete} onClick={this.onRemove(post._id)} />
                         </Col>
